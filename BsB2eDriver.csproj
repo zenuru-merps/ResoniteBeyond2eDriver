@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BsB2eDriver</RootNamespace>
+    <AssemblyName>BsB2eDriver</AssemblyName>
+    <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>BsB2eDriver</AssemblyTitle>
+    <Description>Eye tracking driver for the Bigscreen Beyond 2e</Description>
+    <Product>BsB2eDriver</Product>
+    <Copyright>Copyright © Zenuru 2025</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <DebugType Condition="'$(Configuration)'=='Debug'">embedded</DebugType>
+    <CopyToLibraries Condition="'$(CopyToLibraries)'==''">true</CopyToLibraries>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Authors>Zenuru</Authors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ResonitePath)'==''">
+    <ResonitePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</ResonitePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResonitePath)Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elements.Data">
+      <HintPath>$(ResonitePath)Elements.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResonitePath)FrooxEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.8" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToLibraries)'=='true'">
+    <Message Text="Attempting to copy $(TargetFileName) to $(ResonitePath)Libraries" Importance="high" />
+    <Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFolder="$(ResonitePath)Libraries" ContinueOnError="true" />
+  </Target>
+</Project>
