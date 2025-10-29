@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
-using Elements.Core;
 using Elements.Data;
 using FrooxEngine;
 // ReSharper disable UnassignedReadonlyField
@@ -15,20 +10,21 @@ namespace BsB2eDriver;
 [DataModelType]
 public class b2eSettings : SettingComponent<b2eSettings>
 {
+	public enum SharedMemoryName
+	{
+		VRCFTMemmapData,
+		EyeTrackingMemmapData
+	}
+	
 	internal b2eTrackingDriver? CurrentDriver;
-#if DEBUG
-	private const bool HideDebug = false;
-#else
-	private const bool HideDebug = true;
-#endif
 	
 	public override bool UserspaceOnly => true;
 	
 	[SettingProperty("Bigscreen Beyond eye tracking enabled")]
-	public readonly Sync<bool> b2eEyeTrackingEnabled;	
+	public readonly Sync<bool> B2eEyeTrackingEnabled;
 	
-	[SettingProperty("Use combined values instead of individual eyes")]
-	public readonly Sync<bool> b2eUseCombined;
+	[SettingProperty("Shared memory source stream")]
+	public readonly Sync<SharedMemoryName> B2eSharedMemoryName;
 	
 	[SettingProperty("Force shared-mem (re)initialization")]
 	[SyncMethod(typeof(Action))]
@@ -37,20 +33,24 @@ public class b2eSettings : SettingComponent<b2eSettings>
 		CurrentDriver?.InitializeSharedMem();
 	}
 
-	[SettingIndicatorProperty(nameOverride: "Debug: Last timestamp", hidden: HideDebug)]
-	public readonly Sync<long> DebugDataTimestamp;
+	#if DEBUG
+	[SettingProperty("Debug: Use stale tracking data")]
+	public readonly Sync<bool> DebugAllowStale;
 	
-	[SettingIndicatorProperty(nameOverride: "Debug: Is shared-mem initialized", hidden: HideDebug)]
+	[SettingIndicatorProperty(nameOverride: "Debug: Last timestamp")]
+	public readonly Sync<string> DebugDataTimestamp;
+	
+	[SettingIndicatorProperty(nameOverride: "Debug: Is shared-mem initialized")]
 	public readonly Sync<bool> DebugIsInitialized;
 	
-	[SettingIndicatorProperty(nameOverride: "Debug: Is tracking active", hidden: HideDebug)]
+	[SettingIndicatorProperty(nameOverride: "Debug: Is tracking active")]
 	public readonly Sync<bool> DebugIsActive;
+	#endif
 
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		b2eEyeTrackingEnabled.Value = CurrentDriver?.IsInitialized ?? false;
-		b2eUseCombined.Value = false;
-		DebugDataTimestamp.Value = -1;
+		B2eEyeTrackingEnabled.Value = CurrentDriver?.IsInitialized ?? false;
+		B2eSharedMemoryName.Value = SharedMemoryName.VRCFTMemmapData;
 	}
 }

@@ -12,10 +12,16 @@
     <Copyright>Copyright © Zenuru 2025</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <DebugType Condition="'$(Configuration)'=='Debug'">embedded</DebugType>
     <CopyToLibraries Condition="'$(CopyToLibraries)'==''">true</CopyToLibraries>
     <TargetFramework>net9.0-windows</TargetFramework>
     <Authors>Zenuru</Authors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <Deterministic>true</Deterministic>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(ResonitePath)'==''">
     <ResonitePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</ResonitePath>

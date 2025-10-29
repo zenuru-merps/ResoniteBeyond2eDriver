@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using Elements.Data;
 
 [assembly: AssemblyTrademark("")]
