@@ -3,17 +3,17 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BsB2eDriver</RootNamespace>
     <AssemblyName>BsB2eDriver</AssemblyName>
-    <LangVersion>13</LangVersion>
+    <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyTitle>BsB2eDriver</AssemblyTitle>
     <Description>Eye tracking driver for the Bigscreen Beyond 2e</Description>
     <Product>BsB2eDriver</Product>
     <Copyright>Copyright © Zenuru 2025</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <CopyToLibraries Condition="'$(CopyToLibraries)'==''">true</CopyToLibraries>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Authors>Zenuru</Authors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -38,7 +38,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.8" />
+    <PackageReference Include="System.Text.Json" Version="10.0.0" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToLibraries)'=='true'">
     <Message Text="Attempting to copy $(TargetFileName) to $(ResonitePath)Libraries" Importance="high" />
