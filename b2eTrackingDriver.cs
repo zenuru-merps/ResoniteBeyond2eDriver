@@ -17,6 +17,11 @@ public class b2eTrackingDriver : IInputDriver
 	private string _sharedMemoryName = "VRCFTMemmapData";
 	internal bool IsInitialized;
 	internal bool IsActive;
+	#if DEBUG
+	private const string BuildConfig = "DEBUG";
+	#else
+	private const string BuildConfig = "Release";
+	#endif
 	
 	public int UpdateOrder => 100;
 
@@ -41,6 +46,7 @@ public class b2eTrackingDriver : IInputDriver
 			_sharedMem.Dispose();
 			IsInitialized = false;
 		}
+		UniLog.Log($"BsB2e using shared memory map \"{_sharedMemoryName}\"");
 		try
 		{
 			_sharedMem = MemoryMappedFile.OpenExisting(_sharedMemoryName);
@@ -62,7 +68,7 @@ public class b2eTrackingDriver : IInputDriver
 			throw new PlatformNotSupportedException("BsB2e eye tracking only supports Windows!");
 		
 		_input = inputInterface;
-		UniLog.Log("BsB2e Driver initializing");
+		UniLog.Log($"BsB2e Driver initializing (Build config: {BuildConfig})");
 		InitializeSharedMem();
 		Settings.RegisterComponentChanges<b2eSettings>(OnSettingsChanged);
 		_eyes = new(inputInterface, "Beyond Eyetracking", false);
