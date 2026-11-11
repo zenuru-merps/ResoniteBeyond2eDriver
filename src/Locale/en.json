@@ -1,0 +1,16 @@
+﻿{
+  "localeCode": "en",
+  "authors": [
+    "Zenuru"
+  ],
+  "messages": {
+    "Settings.B2eSettings": "Bigscreen Beyond Eye Tracking",
+    "Settings.B2eSettings.EyeTrackingEnabled": "Eye tracking enabled",
+    "Settings.B2eSettings.TrackingStatus": "Tracking status",
+    "Settings.B2eSettings.ForceInitialize": "Force tracking (re)initialization",
+    "Settings.B2eSettings.DebugAllowStale": "Debug: Use stale tracking data",
+    "Settings.B2eSettings.DebugDataTimestamp": "Debug: Last timestamp",
+    "Settings.B2eSettings.DebugIsInitialized": "Debug: Is shared-mem initialized",
+    "Settings.B2eSettings.DebugIsActive": "Debug: Is tracking active"
+  }
+}
